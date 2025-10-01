@@ -3,6 +3,8 @@
 #include <cctype>
 #include <algorithm>
 #include "util.h"
+#include <vector>
+#include <string>
 
 using namespace std;
 std::string convToLower(std::string src)
@@ -15,16 +17,26 @@ std::string convToLower(std::string src)
     to a set of words based on the criteria given in the assignment **/
 std::set<std::string> parseStringToWords(string rawWords)
 {
+    rawWords = convToLower((rawWords));
 
+    set<string> words;
+    // int prevPunctuation = -1;
 
+    std::stringstream ss1(rawWords);
+    std::string next;
 
+    while(ss1 >> next){
+        std::string temp = next;
+        stringstream ss2(next);
 
+        while(std::getline(ss2, temp, '\'')){
+            if(temp.length() >= 2){
+                words.insert(temp);
+            }
+        }
+    }
 
-
-
-
-
-
+    return words;
 }
 
 /**************************************************

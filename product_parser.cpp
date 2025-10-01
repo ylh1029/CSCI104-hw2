@@ -7,7 +7,6 @@
 #include "util.h"
 using namespace std;
 
-
 ProductParser::ProductParser()
 {
 
@@ -130,13 +129,14 @@ std::string ProductBookParser::categoryID()
  */
 Product* ProductBookParser::makeProduct()
 {
-
-
+    Book* createdProduct = new Book(prodName_, price_, qty_, isbn_, author_);
+    return createdProduct;
 }
 
 
 ProductClothingParser::ProductClothingParser()
 {
+ 
 }
 
 Product* ProductClothingParser::parseSpecificProduct(std::string category,
@@ -185,15 +185,15 @@ std::string ProductClothingParser::categoryID()
  */
 Product* ProductClothingParser::makeProduct()
 {
-
-
-
+    Clothing* createdProduct = new Clothing(prodName_, price_, qty_, size_, brand_);
+    return createdProduct;
 }
 
 
 
 ProductMovieParser::ProductMovieParser()
 {
+
 }
 
 
@@ -245,6 +245,6 @@ std::string ProductMovieParser::categoryID()
  */
 Product* ProductMovieParser::makeProduct()
 {
-
-
+    Movie* createdProduct = new Movie(prodName_, price_, qty_, genre_, rating_);
+    return createdProduct;
 }

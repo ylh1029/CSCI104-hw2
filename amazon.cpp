@@ -9,6 +9,7 @@
 #include "db_parser.h"
 #include "product_parser.h"
 #include "util.h"
+#include "mydatastore.h"
 
 using namespace std;
 struct ProdNameSorter {
@@ -16,6 +17,7 @@ struct ProdNameSorter {
         return (p1->getName() < p2->getName());
     }
 };
+
 void displayProducts(vector<Product*>& hits);
 
 int main(int argc, char* argv[])
@@ -29,9 +31,7 @@ int main(int argc, char* argv[])
      * Declare your derived DataStore object here replacing
      *  DataStore type to your derived type
      ****************/
-    DataStore ds;
-
-
+    MyDataStore ds;
 
     // Instantiate the individual section and product parsers we want
     ProductSectionParser* productSectionParser = new ProductSectionParser;
@@ -101,9 +101,47 @@ int main(int argc, char* argv[])
             }
 	    /* Add support for other commands here */
 
+            else if( cmd == "ADD"){
+                //Adding to cart
+                string username;
+                int product_index;
+                if(ss >> username && ds.isValidUser(username) && ss >> product_index ){
+                    User* currUser = ds.getUser(username);
+                    currUser -> addToCart(hits[product_index-1]);
+                }
 
+                else{
+                    std::cout << "Invalid request" << std::endl;
+                }
+            }
 
+            else if(cmd == "VIEWCART"){
+                //Viewing cart
+                string username;
+                User* currUser;
+                if(ss >> username && ds.isValidUser(username)){
+                    currUser = ds.getUser(username);
+                    currUser -> viewCart();
+                }
 
+                else{
+                    std::cout << "Invalid username" << std::endl;
+                }
+            }
+
+            else if(cmd == "BUYCART"){
+                //Buying cart
+                string username;
+                if(ss >> username && ds.isValidUser(username)){
+                    ds.getUser(username) -> checkOutCart();
+                }
+
+                else{
+                    std::cout << "Invalid username" << std::endl;
+                }
+            }
+
+            
             else {
                 cout << "Unknown command" << endl;
             }

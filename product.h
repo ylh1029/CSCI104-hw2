@@ -5,9 +5,13 @@
 #include <set>
 #include <vector>
 #include <algorithm>
+#include "util.h"
 
 class Product {
 public:
+
+    Product();
+
     Product(const std::string category, const std::string name, double price, int qty);
     virtual ~Product();
 
